@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string name="change_images">Change Images</string>
-    <string name="account_circle">Circle</string>
-    <string name="adjust_black">adjust</string>
-    <string name="alarm_on_black">alarm_on_black</string>
-    <string name="assinstant_black">assinstant_black</string>
+    <string name="my_text">Hello World</string>
+    <string name="start">start</string>
 </resources>

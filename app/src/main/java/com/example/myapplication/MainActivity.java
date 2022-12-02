@@ -1,82 +1,106 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import android.annotation.SuppressLint;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ImageView;
+import android.widget.TextView;
+import java.util.Random;
 
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    Button Yes,No;
+    TextView fcolor,scolor,otvet;
+    int count;
+    int right;
+    String[] textcolor;
+    Resources res;
 
-    ArrayList images = new ArrayList();
-    Button myButton1;
-    ImageView imageView;
-    CheckBox image1,image2,image3,image4,image5;
-    int count=0;
-
-
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        imageView=(ImageView) findViewById(R.id.imageView);
-        CheckBox image1=(CheckBox) findViewById(R.id.checkBox);
-        CheckBox image2=(CheckBox) findViewById(R.id.checkBox2);
-        CheckBox image3=(CheckBox) findViewById(R.id.checkBox3);
-        CheckBox image4=(CheckBox) findViewById(R.id.checkBox4);
-        CheckBox image5=(CheckBox) findViewById(R.id.checkBox5);
+        Yes=(Button) findViewById(R.id.button1);
+        No=(Button) findViewById(R.id.button2);
+        fcolor=(TextView) findViewById(R.id.textView3);
+        scolor=(TextView) findViewById(R.id.textView4);
+        otvet=(TextView) findViewById(R.id.textView5);
+        TextView txtseconds = (TextView) findViewById(R.id.textView);
+        Button btnStart = (Button) findViewById(R.id.button);
 
+        res = getResources();
+        textcolor = res.getStringArray(R.array.textcolor);
+        count = 0;
+        right = 0;
 
-        image1.setChecked(true);
-        images.add(R.drawable.ic_account_circle_black_48dp);
-        imageView.setImageDrawable(getResources().getDrawable((int) images.get(0)));
+        fcolor.setText(textcolor[count]);
+        scolor.setText(textcolor[count]);
 
-        myButton1 = (Button) findViewById(R.id.button);
-        myButton1.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener oclbtn = new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                count=(count+1)%5;
-                imageView.setImageDrawable(getResources().getDrawable((int) images.get(count)));
+            public void onClick(View view) {
+                CountDownTimer my_timer = new CountDownTimer(60000, 1000) {
+                    @Override
+                    public void onTick(long l) {
+                        txtseconds.setText(Long.toString(l / 1000));
+                    }
+                    @Override
+                    public void onFinish() {
+                        txtseconds.setText("Гра завершена");
+                        String score = Integer.toString(right);
+                        otvet.setText(score);
+                    }
+                };
+                my_timer.start();
+
+                Yes.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick (View v)
+                    {
+                        if (count <= 5 || fcolor != scolor) {
+                            count++;
+                            fcolor.setText(textcolor[count]);
+                            scolor.setText(textcolor[count]);
+                            right++;
+                        } else {
+                            count = 0;
+                            fcolor.setText(textcolor[count]);
+                            scolor.setText(textcolor[count]);
+                        }
+                        Random rnd = new Random();
+                        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+                        scolor.setTextColor(color);
+                    }
+                });
+
+                No.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        Random rnd = new Random();
+                        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+                        if (count <= 5 || fcolor == scolor){
+                            count++;
+                            fcolor.setText(textcolor[count]);
+                            scolor.setText(textcolor[count]);
+                            right++;
+                        }else {
+                            count = 0;
+                            fcolor.setText(textcolor[count]);
+                            scolor.setText(textcolor[count]);
+                        }
+                        scolor.setTextColor(color);
+                    }
+                });
             }
-        });
-    }
-    public void checkImage(View v){
-        boolean ch = ((CheckBox) v).isChecked();
-        switch (v.getId()){
-            case R.id.checkBox:
-                if (ch)
-                    images.add(R.drawable.ic_account_circle_black_48dp);
-                else
-                    images.remove(R.drawable.ic_account_circle_black_48dp);
-                break;
-            case R.id.checkBox2:
-                if (ch)
-                    images.add(R.drawable.ic_adjust_black_48dp);
-                else
-                    images.remove(R.drawable.ic_adjust_black_48dp);
-                break;
-            case R.id.checkBox3:
-                if (ch)
-                    images.add(R.drawable.ic_alarm_on_black_48dp);
-                else
-                    images.remove(R.drawable.ic_alarm_on_black_48dp);
-                break;
-            case R.id.checkBox4:
-                if (ch)
-                    images.add(R.drawable.ic_assistant_black_48dp);
-                else
-                    images.remove(R.drawable.ic_assistant_black_48dp);
-                break;
-            case R.id.checkBox5:
-                if (ch)
-                    images.add(R.drawable.ic_brightness_4_black_48dp);
-                else
-                    images.remove(R.drawable.ic_brightness_4_black_48dp);
-                break;
-        }
+        };
+        btnStart.setOnClickListener(oclbtn);
     }
 }
 
