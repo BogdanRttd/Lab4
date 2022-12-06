@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -14,10 +15,11 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     Button Yes,No;
-    TextView fcolor,scolor,answer;
+    TextView fcolor, scolor, answer;
     int count;
     int right;
     String[] textcolor;
+    String score;
     Resources res;
 
     @SuppressLint("MissingInflatedId")
@@ -29,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         No=(Button) findViewById(R.id.button2);
         fcolor=(TextView) findViewById(R.id.textView3);
         scolor=(TextView) findViewById(R.id.textView4);
-        answer=(TextView) findViewById(R.id.textView5);
         TextView txtseconds = (TextView) findViewById(R.id.textView);
         Button btnStart = (Button) findViewById(R.id.button);
 
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onFinish() {
                         txtseconds.setText("Гра завершена");
                         String score = Integer.toString(right);
-                        answer.setText(score);
+                        results();
                     }
 
                 };
@@ -83,27 +84,39 @@ public class MainActivity extends AppCompatActivity {
                            });
 
         No.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                Random rnd = new Random();
-                int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-                if (count <= 5 || fcolor == scolor){
-                    count++;
-                    fcolor.setText(textcolor[count]);
-                    scolor.setText(textcolor[count]);
-                    right++;
-                }else {
-                    count = 0;
-                    fcolor.setText(textcolor[count]);
-                    scolor.setText(textcolor[count]);
-                }
-                scolor.setTextColor(color);
-            }
-        });
+                                @Override
+                                public void onClick(View v)
+                                {
+                                    Random rnd = new Random();
+                                    int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+                                    if (count <= 5 || fcolor == scolor){
+                                        count++;
+                                        fcolor.setText(textcolor[count]);
+                                        scolor.setText(textcolor[count]);
+                                        right++;
+                                    }else {
+                                        count = 0;
+                                        fcolor.setText(textcolor[count]);
+                                        scolor.setText(textcolor[count]);
+                                    }
+                                    scolor.setTextColor(color);
+                                }
+                            });
             }
         };
         btnStart.setOnClickListener(oclbtn);
     }
-}
+    public void back(View v){
+        Intent intent = new Intent(this,Registration.class);
+        startActivity(intent);
+    }
 
+    public void results(){
+        Intent intent = new Intent(this,Result.class);
+        Intent i = new Intent(this,Email.class);
+        i.putExtra("key",score);
+        intent.putExtra("key",score);
+        startActivity(i);
+        startActivity(intent);
+    }
+}
