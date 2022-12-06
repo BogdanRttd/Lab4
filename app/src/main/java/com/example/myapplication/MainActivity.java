@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     Button Yes,No;
-    TextView fcolor,scolor,otvet;
+    TextView fcolor,scolor,answer;
     int count;
     int right;
     String[] textcolor;
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         No=(Button) findViewById(R.id.button2);
         fcolor=(TextView) findViewById(R.id.textView3);
         scolor=(TextView) findViewById(R.id.textView4);
-        otvet=(TextView) findViewById(R.id.textView5);
+        answer=(TextView) findViewById(R.id.textView5);
         TextView txtseconds = (TextView) findViewById(R.id.textView);
         Button btnStart = (Button) findViewById(R.id.button);
 
@@ -49,55 +49,58 @@ public class MainActivity extends AppCompatActivity {
                     public void onTick(long l) {
                         txtseconds.setText(Long.toString(l / 1000));
                     }
+
                     @Override
                     public void onFinish() {
                         txtseconds.setText("Гра завершена");
                         String score = Integer.toString(right);
-                        otvet.setText(score);
+                        answer.setText(score);
                     }
+
                 };
                 my_timer.start();
 
-                Yes.setOnClickListener(new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick (View v)
-                    {
-                        if (count <= 5 || fcolor != scolor) {
-                            count++;
-                            fcolor.setText(textcolor[count]);
-                            scolor.setText(textcolor[count]);
-                            right++;
-                        } else {
-                            count = 0;
-                            fcolor.setText(textcolor[count]);
-                            scolor.setText(textcolor[count]);
-                        }
-                        Random rnd = new Random();
-                        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-                        scolor.setTextColor(color);
-                    }
-                });
+        Yes.setOnClickListener(new View.OnClickListener()
 
-                No.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        Random rnd = new Random();
-                        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-                        if (count <= 5 || fcolor == scolor){
-                            count++;
-                            fcolor.setText(textcolor[count]);
-                            scolor.setText(textcolor[count]);
-                            right++;
-                        }else {
-                            count = 0;
-                            fcolor.setText(textcolor[count]);
-                            scolor.setText(textcolor[count]);
-                        }
-                        scolor.setTextColor(color);
-                    }
-                });
+                           {
+                               @Override
+                               public void onClick (View v)
+                               {
+                                   if (count <= 5 || fcolor != scolor) {
+                                       count++;
+                                       fcolor.setText(textcolor[count]);
+                                       scolor.setText(textcolor[count]);
+                                       right++;
+                                   } else {
+                                       count = 0;
+                                       fcolor.setText(textcolor[count]);
+                                       scolor.setText(textcolor[count]);
+                                   }
+                                   Random rnd = new Random();
+                                   int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+                                   scolor.setTextColor(color);
+                               }
+                           });
+
+        No.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Random rnd = new Random();
+                int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+                if (count <= 5 || fcolor == scolor){
+                    count++;
+                    fcolor.setText(textcolor[count]);
+                    scolor.setText(textcolor[count]);
+                    right++;
+                }else {
+                    count = 0;
+                    fcolor.setText(textcolor[count]);
+                    scolor.setText(textcolor[count]);
+                }
+                scolor.setTextColor(color);
+            }
+        });
             }
         };
         btnStart.setOnClickListener(oclbtn);

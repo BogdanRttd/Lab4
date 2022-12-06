@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string name="my_text">Hello World</string>
-    <string name="start">start</string>
+    <string-array name="textcolor">
+        <item>Зеленый</item>
+        <item>Черный</item>
+        <item>Желтый</item>
+        <item>Синий</item>
+        <item>Красный</item>
+        <item>Голубой</item>
+        <item>Коричневый</item>
+        <item>Фиолетовый</item>
+    </string-array>
 </resources>
