@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import java.util.Random;
+import com.example.lab4_tockyjb.R;
 
 
 public class MainActivity extends AppCompatActivity {

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.example.lab4_tockyjb.R;
 
 
 public class Registration extends AppCompatActivity {

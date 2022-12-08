@@ -10,4 +10,7 @@
         <item>Коричневый</item>
         <item>Фиолетовый</item>
     </string-array>
+        <string name="_90_sec">90 секунд</string>
+        <string name="_45_sec">45 секунд</string>
+        <string name="_15_sec">15 секунд</string>
 </resources>
